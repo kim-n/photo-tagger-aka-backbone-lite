@@ -15,11 +15,12 @@
 
     submit: function (event) {
       event.preventDefault();
-      console.log(event);
+
       var newPhotoObj = $('#new-photo-form').serializeJSON();
 
       var newPhoto = new PT.Photo(newPhotoObj["photo"]);
       newPhoto.create(function(){});
+      $('#new-photo-form')[0].reset();
     }
 
   });

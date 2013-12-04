@@ -28,8 +28,9 @@
           dataType: 'json', // confirm this works as expected
           success: function (resp) {
             _.extend(photoObj.attributes, resp);
-            Photo.all.push(photoObj);
-            callback();
+            Photo.all.unshift(photoObj);
+            Photo.trigger("add")
+            callback()
           },
           error: function() {alert("photo error on server")}
 
@@ -70,6 +71,8 @@
 
     all: [],
 
+    _events: {},
+
     fetchByUserId: function(userId, callback){
       $.ajax({
         url:  "/api/users/" + userId + "/photos",
@@ -83,6 +86,21 @@
         },
         error: function() {alert("photo error on server")}
 
+      });
+    },
+
+    on: function(eventName, callback){
+      if (Photo._events[eventName]){
+        this._events[eventName].push(callback);
+      } else {
+        this._events[eventName] = [callback];
+      };
+
+    },
+
+    trigger: function (eventName) {
+      this._events[eventName].forEach(function (callback) {
+        callback();
       });
     }
 
