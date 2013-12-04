@@ -72,10 +72,11 @@ _.extend(Photo.prototype, {
       $.ajax({
         url: "/api/photos",
         type: "POST",
-        data: photoObj.attributes,
+        data: {photo: photoObj.attributes},
         dataType: 'json', // confirm this works as expected
         success: function (resp) {
-          _.extend(photoObj.attributes, JSON.parse(resp));
+          console.log(resp)
+          _.extend(photoObj.attributes, resp);
           callback();
         },
         error: function() {alert("photo error on server")}
