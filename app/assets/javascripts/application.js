@@ -18,12 +18,13 @@
 //= require underscore
 //
 //= require_tree ./models
+//= require_tree ./views
 //= require_tree ../templates
 //
 //= require_tree .
 
 
-/*
+
 _.extend(PT, {
   initialize:   function () {
     PT.Photo.fetchByUserId(CURRENT_USER_ID, function () {
@@ -49,5 +50,5 @@ _.extend(PT, {
     content.append(photoFormView.render().$el);
   },
 });
-*/
+
 
