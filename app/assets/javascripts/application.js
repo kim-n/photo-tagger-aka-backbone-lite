@@ -47,3 +47,53 @@ _.extend(PT, {
     content.append(photoFormView.render().$el);
   },
 });
+
+
+var Photo = function (obj) {
+  this.attributes = obj
+}
+
+
+_.extend(Photo.prototype, {
+  get: function (attr_name) {
+    return this.attributes[attr_name];
+  },
+
+  set: function (attr_name, val) {
+    this.attributes[attr_name] = val;
+  },
+
+  create: function (callback) {
+    if (this.attributes["id"]){
+      return;
+    } else {
+      var photoObj = this;
+      $.ajax({
+        url: "/api/photos",
+        type: "POST",
+        data: photoObj.attributes,
+        success: callback(),
+        error: function() {alert("photo error on server")};
+
+      });
+    };
+  };
+
+
+  save: function (callback) {
+    if (this.attributes["id"]){
+      var photoObj = this;
+      $.ajax({
+        url: "/api/photos/" + this.attributes["id"],
+        type: "PUT",
+        data: photoObj.attributes,
+        success: callback(),
+        error: function() {alert("photo error on server")};
+
+      });
+    } else {
+      this.create(callback);
+    };
+  };
+
+});
