@@ -8,12 +8,13 @@
   _.extend(PhotosListView.prototype, {
     render: function () {
       this.$el.empty();
-      this.$el.append('<ul></ul>');
 
+      var $unorderedList = $('<ul></ul>')
       var self = this;
       PT.Photo.all.forEach(function(pic){
-        self.$el.append('<li>' + pic.title + '</li>');
+        $unorderedList.append('<li>' + pic.get("title") + '</li>');
       });
+      this.$el.append($unorderedList);
       return this; //why not return this.el???
     }
 
