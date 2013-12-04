@@ -17,5 +17,6 @@ class Api::PhotosController < ApplicationController
   def index
     @photos = Photo.where("owner_id = ?", params[:user_id])
     render :json => @photos
+    #add html response
   end
 end

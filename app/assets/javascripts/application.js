@@ -22,6 +22,7 @@
 //
 //= require_tree .
 
+/*
 _.extend(PT, {
   initialize:   function () {
     PT.Photo.fetchByUserId(CURRENT_USER_ID, function () {
@@ -47,7 +48,7 @@ _.extend(PT, {
     content.append(photoFormView.render().$el);
   },
 });
-
+*/
 
 var Photo = function (obj) {
   this.attributes = obj
@@ -72,12 +73,16 @@ _.extend(Photo.prototype, {
         url: "/api/photos",
         type: "POST",
         data: photoObj.attributes,
-        success: callback(),
-        error: function() {alert("photo error on server")};
+        dataType: 'json', // confirm this works as expected
+        success: function (resp) {
+          _.extend(photoObj.attributes, JSON.parse(resp));
+          callback();
+        },
+        error: function() {alert("photo error on server")}
 
       });
     };
-  };
+  },
 
 
   save: function (callback) {
@@ -87,13 +92,39 @@ _.extend(Photo.prototype, {
         url: "/api/photos/" + this.attributes["id"],
         type: "PUT",
         data: photoObj.attributes,
-        success: callback(),
-        error: function() {alert("photo error on server")};
+        dataType: 'json',  // confirm this works as expected
+        success: function (resp) {
+          _.extend(photoObj.attributes, resp);
+          callback();
+        },
+        error: function() {alert("photo error on server")}
 
       });
     } else {
       this.create(callback);
     };
-  };
+  }
+
+});
+
+_.extend(Photo, {
+
+  all: [],
+
+  fetchByUserId: function(userId, callback){
+    $.ajax({
+      url:  "/api/users/" + userId + "/photos",
+      type: "GET",
+      dataType: 'json',  // confirm this works as expected
+      success: function (resp) {
+        resp.forEach(function(picObj){
+          Photo.all.push(new Photo(picObj));
+        });
+        callback();
+      },
+      error: function() {alert("photo error on server")}
+
+    });
+  }
 
 });
