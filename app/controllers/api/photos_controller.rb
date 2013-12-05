@@ -33,4 +33,5 @@ class Api::PhotosController < ApplicationController
     end
 
   end
+
 end

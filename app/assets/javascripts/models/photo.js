@@ -102,6 +102,16 @@
       this._events[eventName].forEach(function (callback) {
         callback();
       });
+    },
+
+    find: function(id){
+      var foundPic;
+      this.all.forEach(function(pic){
+        if (pic.get('id') == id){
+          foundPic = pic;
+        };
+      });
+      return foundPic;
     }
 
   });

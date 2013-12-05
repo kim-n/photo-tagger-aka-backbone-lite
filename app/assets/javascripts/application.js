@@ -33,10 +33,10 @@ _.extend(PT, {
   },
 
   showPhotoDetail: function (photo) {
-    var content = $("#content");
+    var $content = $("#content");
 
     var photoDetailView = new PT.PhotoDetailView(photo);
-    content.html(photoDetailView.render().$el);
+    $content.html(photoDetailView.render().$el);
   },
 
   showPhotosIndex: function () {
