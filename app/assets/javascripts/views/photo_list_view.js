@@ -24,7 +24,6 @@
       event.preventDefault();
       var photoId = $(event.currentTarget).attr("data-id");
       var pic = PT.Photo.find(photoId);
-      console.log(PT.Photo.find(photoId))
       PT.showPhotoDetail(pic);
     }
 
