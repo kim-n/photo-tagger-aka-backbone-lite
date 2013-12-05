@@ -17,15 +17,18 @@
 
     popTagSelectView: function(event) {
       event.preventDefault();
+
       var offsetX = event.offsetX - 50;
       var offsetY = event.offsetY + 100;
       var $box = $('<div class="photo-tag"></div>')
       $box.css({position: 'absolute', left: offsetX, top: offsetY});
-      this.$el.append($box)
+
+      var tagSelect = new PT.TagSelectView(this.photo, event);
+      $box.append(tagSelect.render().$el);
+
+      this.$el.append($box);
     }
 
   });
-
-
 
 })(this);
